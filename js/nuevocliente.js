@@ -1,11 +1,11 @@
-import {mostrarAlerta} from './funciones.js'
+import { nuevoCliente, validar} from './API.js';
+import { mostrarAlerta } from './funciones.js';
 
-(function(){
-
+(function() {
     const formulario = document.querySelector('#formulario');
     formulario.addEventListener('submit', validarCliente);
 
-    function validarCliente(e){
+    async function validarCliente(e) {
         e.preventDefault();
 
         const nombre = document.querySelector('#nombre').value;
@@ -13,33 +13,18 @@ import {mostrarAlerta} from './funciones.js'
         const telefono = document.querySelector('#telefono').value;
         const empresa = document.querySelector('#empresa').value;
 
-
         const cliente = {
-            nombre,
-            email,
+            nombre, 
+            email, 
             telefono,
             empresa
-    
-            
         }
 
-        if(validar(cliente)){
-            //Mostrar mensaje
+        if( validar(cliente) ) {
             mostrarAlerta('Todos los campos son obligatorios');
             return;
         }
-
-        console.log('Si se pasó la validación')
+        await nuevoCliente(cliente);
+        window.location.href = 'index.html';
     }
-
-    function validar(obj){
-        return !Object.values(obj).every(input => input !== '');
-
-    }
-
-
-
-
-    
-
 })();
